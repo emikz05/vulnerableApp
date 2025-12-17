@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="shop-container">
+    <div class="shop-header">
+        <h1>Clothing Store</h1>
+        <p>Discover our latest collection</p>
+    </div>
+
+    <div class="shop-grid">
+        {% for p in products %}
+            <a href="/product/{{ p.id }}" class="product-card">
+                <div class="product-image">
+                    <img src="/static/images/{{ p.image }}" alt="{{ p.name }}">
+                </div>
+
+                <div class="product-info">
+                    <h3>{{ p.name }}</h3>
+                    <p class="price">${{ "%.2f"|format(p.price) }}</p>
+                    <p class="desc">{{ p.short }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

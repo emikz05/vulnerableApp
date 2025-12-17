@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "MEMO's project" }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+<header class="header">
+
+    <a href="{% if session.get('user_id') %}/dashboard{% else %}/login{% endif %}" class="brand">
+        <span class="logo">🛍️</span>
+        <span class="name">MEMO</span>
+    </a>
+
+    <nav class="nav-right">
+        {% if not session.get("user_id") %}
+            <!-- GUEST -->
+            <a href="/login">Login</a>
+            <a href="/register">Sign up</a>
+
+        {% else %}
+            <!-- USER / ADMIN -->
+            <a href="/dashboard">Shop</a>
+            <a href="/profile">Profile</a>
+
+            {% if session.get("role") == "admin" %}
+                <a href="/admin" class="admin-link">Admin</a>
+            {% endif %}
+
+            <a href="/logout">Logout</a>
+        {% endif %}
+    </nav>
+
+</header>
+
+<main class="main">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <p>MEMO · Web Application Security Final Project</p>
+</footer>
+
+</body>
+</html>

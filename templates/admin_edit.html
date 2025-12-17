@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="admin-page">
+    <h1>Edit Product</h1>
+    <p class="admin-subtitle">Update product information</p>
+
+    <form method="post" enctype="multipart/form-data" class="admin-form">
+
+        <input type="text" name="name" value="{{ product.name }}" required>
+
+        <input type="text" name="short" value="{{ product.short }}" required>
+
+        <textarea name="full" required>{{ product.full }}</textarea>
+
+        <input type="number" step="0.5" name="price" value="{{ product.price }}" required>
+
+        <input type="hidden" name="current_image" value="{{ product.image }}">
+        <input type="file" name="image">
+
+        <div class="form-actions">
+            <button type="submit">Save changes</button>
+            <a href="/admin" class="cancel-btn">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

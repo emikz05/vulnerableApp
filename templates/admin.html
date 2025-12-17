@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="admin-page">
+
+    <h1>Admin Panel</h1>
+    <p class="admin-subtitle">Manage products</p>
+    <a href="/admin/add" class="profile-link">+ Add product</a>
+    <table class="admin-table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+
+        {% for p in products %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>${{ "%.2f"|format(p.price) }}</td>
+            <td>
+                <a href="/admin/edit/{{ p.id }}" class="edit-btn">
+                    Edit
+                </a>
+            </td>
+            <td>
+                <a href="/admin/delete/{{ p.id }}" class="delete-btn">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}
