@@ -5,13 +5,24 @@ product_bp = Blueprint("product", __name__)
 DB = "database.db"
 
 
-@product_bp.route("/product/<int:product_id>", methods=["GET", "POST"])
+@product_bp.route("/product/<product_id>", methods=["GET", "POST"])
 def product(product_id):
-    
     conn = sqlite3.connect(DB)
     cur = conn.cursor()
 
-    # Получаем товар
+    if request.method == "POST":
+        content = request.form.get("content")
+        user_id = session.get("user_id")
+
+        if content and user_id:
+            cur.execute(
+                "INSERT INTO comments (product_id, user_id, content) VALUES (?, ?, ?)",
+                (product_id, user_id, content)
+            )
+            conn.commit()
+
+        return redirect(f"/product/{product_id}")
+
     cur.execute("""
         SELECT id, name, full_description, price, image
         FROM products
@@ -19,19 +30,10 @@ def product(product_id):
     """, (product_id,))
     product = cur.fetchone()
 
-    # Добавление review
-    if request.method == "POST":
-        content = request.form.get("content")
-        user_id = session.get("user_id", 1)
+    if not product:
+        conn.close()
+        return "Product not found", 404
 
-        cur.execute(
-            "INSERT INTO comments (product_id, user_id, content) VALUES (?, ?, ?)",
-            (product_id, user_id, content)
-        )
-        conn.commit()
-        return redirect(f"/product/{product_id}")
-
-    # Получаем reviews
     cur.execute("""
         SELECT users.username, comments.content
         FROM comments
@@ -44,7 +46,6 @@ def product(product_id):
 
     return render_template(
         "product.html",
-        title=product[1],
         product={
             "id": product[0],
             "name": product[1],

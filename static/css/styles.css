@@ -563,3 +563,42 @@ body {
     color: #0f1220;
 }
 
+/* ===== SEARCH BAR ===== */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-form input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    background: #16182a;
+    color: #eaeaf0;
+    width: 180px;
+}
+
+.search-form input::placeholder {
+    color: #9aa3b2;
+}
+
+.search-form button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #5eead4;
+    color: #0f1220;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background: #3ddcbe;
+}
+
+.no-results {
+    margin-top: 40px;
+    color: #9aa3b2;
+    font-size: 16px;
+}
